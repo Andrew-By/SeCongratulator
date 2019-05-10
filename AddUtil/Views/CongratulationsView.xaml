@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
-        Height="450" Width="650"
-        prism:ViewModelLocator.AutoWireViewModel="True">
+        prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="789.977" d:DesignHeight="281.966">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -15,10 +14,9 @@
 
         <DataGrid 
             Margin="10"
-            HorizontalAlignment="Center"
             AutoGenerateColumns="False" 
             ItemsSource="{Binding Path=Congratulations, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" 
-            SelectedItem="{Binding Path=SelectedCongratulation, Mode=TwoWay}" Width="375">
+            SelectedItem="{Binding Path=SelectedCongratulation, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Kind" Binding="{Binding Path=Kind, Mode=TwoWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Holiday" Binding="{Binding Path=Holiday, Mode=TwoWay}" IsReadOnly="True"/>
