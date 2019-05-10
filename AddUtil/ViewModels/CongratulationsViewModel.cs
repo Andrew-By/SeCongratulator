@@ -1,6 +1,6 @@
-﻿using AddUtil.Commands;
-using AddUtil.Db;
+﻿using AddUtil.Db;
 using AddUtil.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace AddUtil.ViewModels
 {
@@ -41,49 +42,44 @@ namespace AddUtil.ViewModels
         // Commands.
         //
 
-        private RelayCommand goToCongratulationAppendingCommand;
-        public RelayCommand GoToCongratulationAppendingCommand
+        private ICommand goToCongratulationAppendingCommand;
+        public ICommand GoToCongratulationAppendingCommand
         {
             get
             {
-                return 
-                    goToCongratulationAppendingCommand ?? 
-                        (goToCongratulationAppendingCommand = 
-                            new RelayCommand(
-                                obj => this.GoToCongratulationAppending()));
+                return
+                    goToCongratulationAppendingCommand ??
+                        (goToCongratulationAppendingCommand =
+                            new DelegateCommand(GoToCongratulationAppending));
             }
         }
 
-        private RelayCommand removeRecordCommand;
-        public RelayCommand RemoveRecordCommand
+        private DelegateCommand removeRecordCommand;
+        public DelegateCommand RemoveRecordCommand
         {
             get
             {
                 return removeRecordCommand ??
                     (removeRecordCommand =
-                        new RelayCommand(
-                            obj => this.DeleteCongratulation(),
-                            a => this.IsCongratulationSelected()));
+                        new DelegateCommand(DeleteCongratulation, IsCongratulationSelected));
             }
         }
 
-        private RelayCommand goToMergeCommand;
-        public RelayCommand GoToMergeCommand
+        private ICommand goToMergeCommand;
+        public ICommand GoToMergeCommand
         {
-            get => goToMergeCommand ?? (goToMergeCommand = new RelayCommand(obj => this.GoToMergeWithOldDb()));
+            get => goToMergeCommand ?? (goToMergeCommand = new DelegateCommand(GoToMergeWithOldDb));
         }
 
-        private RelayCommand goToCongratulationEditCommand;
-        public RelayCommand GoToCongratulationEditCommand
+        private DelegateCommand goToCongratulationEditCommand;
+        public DelegateCommand GoToCongratulationEditCommand
         {
             get
             {
                 return
                     goToCongratulationEditCommand ??
                         (goToCongratulationEditCommand =
-                            new RelayCommand(
-                                obj => this.GoToCongratulationEdit(), 
-                                (a) => this.IsCongratulationSelected()));
+                            new DelegateCommand(GoToCongratulationEdit, IsCongratulationSelected));
             }
         }
 

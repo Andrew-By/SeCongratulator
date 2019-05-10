@@ -1,11 +1,12 @@
-﻿using AddUtil.Commands;
-using AddUtil.Db;
+﻿using AddUtil.Db;
 using AddUtil.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace AddUtil.ViewModels
 {
@@ -61,40 +62,38 @@ namespace AddUtil.ViewModels
         // Commands.
         //
 
-        private RelayCommand appendCommand;
-        public RelayCommand AppendCommand
+        private ICommand appendCommand;
+        public ICommand AppendCommand
         {
             get
             {
                 return appendCommand ??
-                    (appendCommand =
-                        new RelayCommand(
-                            obj => this.SaveCongratulation()));
+                    (appendCommand = new DelegateCommand(SaveCongratulation));
             }
         }
 
-        public RelayCommand chooseFirstContentTypeCommand;
-        public RelayCommand ChooseFirstContentTypeCommand
+        public ICommand chooseFirstContentTypeCommand;
+        public ICommand ChooseFirstContentTypeCommand
         {
-            get => chooseFirstContentTypeCommand ?? (chooseFirstContentTypeCommand = new RelayCommand(obj => ChooseContentTypeInModel("LOL")));
+            get => chooseFirstContentTypeCommand ?? (chooseFirstContentTypeCommand = new DelegateCommand(() => ChooseContentTypeInModel("LOL")));
         }
 
-        private RelayCommand chooseSecondContentTypeCommand;
-        public RelayCommand ChooseSecondContentTypeCommand
+        private ICommand chooseSecondContentTypeCommand;
+        public ICommand ChooseSecondContentTypeCommand
         {
-            get => chooseSecondContentTypeCommand ?? (chooseSecondContentTypeCommand = new RelayCommand(obj => ChooseContentTypeInModel("VLAD")));
+            get => chooseSecondContentTypeCommand ?? (chooseSecondContentTypeCommand = new DelegateCommand(() => ChooseContentTypeInModel("VLAD")));
         }
 
-        private RelayCommand chooseThirdContentTypeCommand;
-        public RelayCommand ChooseThirdContentTypeCommand
+        private ICommand chooseThirdContentTypeCommand;
+        public ICommand ChooseThirdContentTypeCommand
         {
-            get => chooseThirdContentTypeCommand ?? (chooseThirdContentTypeCommand = new RelayCommand(obj => ChooseContentTypeInModel("SUSI")));
+            get => chooseThirdContentTypeCommand ?? (chooseThirdContentTypeCommand = new DelegateCommand(() => ChooseContentTypeInModel("SUSI")));
         }
 
-        private RelayCommand abortCommand;
-        public RelayCommand AbortCommand
+        private ICommand abortCommand;
+        public ICommand AbortCommand
         {
-            get => abortCommand ?? (abortCommand = new RelayCommand(obj => this.AbortAppending()));
+            get => abortCommand ?? (abortCommand = new DelegateCommand(AbortAppending));
         }
 
         public NewCongratulationViewModel()
@@ -165,10 +164,10 @@ namespace AddUtil.ViewModels
                 return;
             }
 
-            var congratulation = 
+            var congratulation =
                 dbContext.CongratulationsDbModel.
                     FirstOrDefault(
-                        congrat => 
+                        congrat =>
                             congrat.Id == this.CongratulationModel.Id);
 
             if (congratulation != null)

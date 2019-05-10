@@ -1,4 +1,4 @@
-﻿using AddUtil.Commands;
+﻿using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace AddUtil.ViewModels
 {
@@ -14,10 +15,10 @@ namespace AddUtil.ViewModels
     /// </summary>
     public class MergeViewModel : BindableBase
     {
-        private RelayCommand abortCommand;
-        public RelayCommand AbortCommand
+        private ICommand abortCommand;
+        public ICommand AbortCommand
         {
-            get => abortCommand ?? (abortCommand = new RelayCommand((obj) => this.Abort()));
+            get => abortCommand ?? (abortCommand = new DelegateCommand(Abort));
         }
 
         private void Abort()
