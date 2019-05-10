@@ -1,4 +1,5 @@
 ﻿using AddUtil.Commands;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace AddUtil.ViewModels
     /// <summary>
     /// Прослойка для перекопирования старой базы в новую.
     /// </summary>
-    public class MergeViewModel : ViewModelBase
+    public class MergeViewModel : BindableBase
     {
         private RelayCommand abortCommand;
         public RelayCommand AbortCommand

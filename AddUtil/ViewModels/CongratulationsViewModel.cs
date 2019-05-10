@@ -1,6 +1,7 @@
 ﻿using AddUtil.Commands;
 using AddUtil.Db;
 using AddUtil.Models;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,7 @@ using System.Windows;
 
 namespace AddUtil.ViewModels
 {
-    public class CongratulationsViewModel : ViewModelBase
+    public class CongratulationsViewModel : BindableBase
     {
         //
         // Fields and properties.
@@ -21,7 +22,7 @@ namespace AddUtil.ViewModels
         public List<CongratulationModel> Congratulations
         {
             get => congratulations;
-            set => SetField(ref congratulations, value);
+            set => SetProperty(ref congratulations, value);
         }
 
         private CongratulationModel selectedCongratulation;
@@ -30,7 +31,7 @@ namespace AddUtil.ViewModels
             get => selectedCongratulation;
             set
             {
-                SetField(ref selectedCongratulation, value);
+                SetProperty(ref selectedCongratulation, value);
                 GoToCongratulationEditCommand.RaiseCanExecuteChanged();
                 RemoveRecordCommand.RaiseCanExecuteChanged();
             }

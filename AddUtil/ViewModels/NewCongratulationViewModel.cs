@@ -1,6 +1,7 @@
 ﻿using AddUtil.Commands;
 using AddUtil.Db;
 using AddUtil.Models;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace AddUtil.ViewModels
     /// <summary>
     /// Инкапсулирует логику для вызова добавления новой модели в БД.
     /// </summary>
-    public class NewCongratulationViewModel : ViewModelBase
+    public class NewCongratulationViewModel : BindableBase
     {
         //
         // Static consts.
@@ -33,7 +34,7 @@ namespace AddUtil.ViewModels
         public List<string> SexChooser
         {
             get => sexChooser;
-            set => SetField(ref sexChooser, value);
+            set => SetProperty(ref sexChooser, value);
         }
 
         private string selectedSex;
@@ -42,7 +43,7 @@ namespace AddUtil.ViewModels
             get => selectedSex;
             set
             {
-                SetField(ref selectedSex, value);
+                SetProperty(ref selectedSex, value);
             }
         }
 
@@ -52,7 +53,7 @@ namespace AddUtil.ViewModels
             get => congratulationModel;
             set
             {
-                SetField(ref congratulationModel, value);
+                SetProperty(ref congratulationModel, value);
             }
         }
 
