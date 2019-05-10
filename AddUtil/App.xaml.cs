@@ -7,33 +7,56 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Prism;
+using Prism.Unity;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Regions;
 
 namespace AddUtil
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        public DisplayRootRegistry DisplayRootRegistry = new DisplayRootRegistry();
-        CongratulationsViewModel congratulationsViewModel;
+        //public DisplayRootRegistry DisplayRootRegistry = new DisplayRootRegistry();
+        //CongratulationsViewModel congratulationsViewModel;
 
-        public App()
+        private IRegionManager _regionManager;
+
+        protected override Window CreateShell()
         {
-            DisplayRootRegistry.RegisterWindowType<CongratulationsViewModel, CongratulationsView>();
-            DisplayRootRegistry.RegisterWindowType<MergeViewModel, MergeView>();
-            DisplayRootRegistry.RegisterWindowType<NewCongratulationViewModel, NewCongratulationView>();
+            return Container.Resolve<MainWindow>();
         }
 
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnInitialized()
         {
-            base.OnStartup(e);
-
-            congratulationsViewModel = new CongratulationsViewModel();
-
-            await DisplayRootRegistry.ShowModalPresentation(congratulationsViewModel);
-
-            Shutdown();
+            base.OnInitialized();
+            _regionManager = Container.Resolve<IRegionManager>();
+            _regionManager.Regions["ContentRegion"].RequestNavigate(new Uri("CongratulationsView", UriKind.RelativeOrAbsolute));
         }
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<CongratulationsView>();
+            containerRegistry.RegisterForNavigation<MergeView>();
+            containerRegistry.RegisterForNavigation<NewCongratulationView>();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            base.ConfigureModuleCatalog(moduleCatalog);
+        }
+
+        //protected override async void OnStartup(StartupEventArgs e)
+        //{
+        //    base.OnStartup(e);
+
+        //    congratulationsViewModel = new CongratulationsViewModel();
+
+        //    await DisplayRootRegistry.ShowModalPresentation(congratulationsViewModel);
+
+        //}
     }
 }

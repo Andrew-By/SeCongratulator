@@ -212,8 +212,8 @@ namespace AddUtil.ViewModels
 
         private void AbortAppending()
         {
-            var displayRoot = (Application.Current as App).DisplayRootRegistry;
-            displayRoot.HidePresentation(this);
+            //var displayRoot = (Application.Current as App).DisplayRootRegistry;
+            //displayRoot.HidePresentation(this);
         }
 
         private void ChooseContentTypeInModel(string contentType)

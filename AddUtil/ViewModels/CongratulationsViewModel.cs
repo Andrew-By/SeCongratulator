@@ -124,30 +124,30 @@ namespace AddUtil.ViewModels
 
         private async void GoToCongratulationAppending()
         {
-            var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
+            //var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
 
-            var newCongratulationViewModel = new NewCongratulationViewModel();
-            await displayRootRegistry.ShowModalPresentation(newCongratulationViewModel);
+            //var newCongratulationViewModel = new NewCongratulationViewModel();
+            //await displayRootRegistry.ShowModalPresentation(newCongratulationViewModel);
 
             this.UpdateContext();
         }
 
         private async void GoToCongratulationEdit()
         {
-            if (SelectedCongratulation == null)
-            {
-                MessageBox.Show(
-                    "Выберите поздравление для редактирования.",
-                    "Ошибка редактирования");
+            //if (SelectedCongratulation == null)
+            //{
+            //    MessageBox.Show(
+            //        "Выберите поздравление для редактирования.",
+            //        "Ошибка редактирования");
 
-                return;
-            }
+            //    return;
+            //}
 
-            var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
+            //var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
 
-            await displayRootRegistry.ShowModalPresentation(
-                new NewCongratulationViewModel(
-                    this.SelectedCongratulation));
+            //await displayRootRegistry.ShowModalPresentation(
+            //    new NewCongratulationViewModel(
+            //        this.SelectedCongratulation));
 
             this.UpdateContext();
         }
@@ -159,11 +159,11 @@ namespace AddUtil.ViewModels
         // Перенос из одной базы в другую - старая база должна подаваться аргументом, на выходе новая база, заполненная значениями со старой.
         private async void GoToMergeWithOldDb()
         {
-            var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
+            //var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
 
-            await displayRootRegistry.ShowModalPresentation(new MergeViewModel());
+            //await displayRootRegistry.ShowModalPresentation(new MergeViewModel());
 
-            this.UpdateContext();
+            //this.UpdateContext();
         }
     }
 }

@@ -21,8 +21,8 @@ namespace AddUtil.ViewModels
 
         private void Abort()
         {
-            var displayRoot = (Application.Current as App).DisplayRootRegistry;
-            displayRoot.HidePresentation(this);
+            //var displayRoot = (Application.Current as App).DisplayRootRegistry;
+            //displayRoot.HidePresentation(this);
         }
     }
 }
