@@ -1,6 +1,8 @@
 ﻿using AddUtil.Db;
 using AddUtil.Models;
+using AddUtil.Notifications;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -42,6 +44,7 @@ namespace AddUtil.ViewModels
         // Commands.
         //
 
+        public InteractionRequest<CongratulationConfirmation> AppendInteractionRequest { get; private set; }
         private ICommand goToCongratulationAppendingCommand;
         public ICommand GoToCongratulationAppendingCommand
         {
@@ -71,6 +74,7 @@ namespace AddUtil.ViewModels
             get => goToMergeCommand ?? (goToMergeCommand = new DelegateCommand(GoToMergeWithOldDb));
         }
 
+        public InteractionRequest<CongratulationConfirmation> EditCongratulationRequest { get; private set; }
         private DelegateCommand goToCongratulationEditCommand;
         public DelegateCommand GoToCongratulationEditCommand
         {
@@ -89,6 +93,8 @@ namespace AddUtil.ViewModels
 
         public CongratulationsViewModel()
         {
+            AppendInteractionRequest = new InteractionRequest<CongratulationConfirmation>();
+            EditCongratulationRequest = new InteractionRequest<CongratulationConfirmation>();
             this.InitCongratulationsCollection();
         }
 
@@ -119,33 +125,45 @@ namespace AddUtil.ViewModels
             this.UpdateContext();
         }
 
-        private async void GoToCongratulationAppending()
+        private void GoToCongratulationAppending()
         {
-            //var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
-
-            //var newCongratulationViewModel = new NewCongratulationViewModel();
-            //await displayRootRegistry.ShowModalPresentation(newCongratulationViewModel);
-
+            AppendInteractionRequest?.Raise(new CongratulationConfirmation
+            {
+                Title = "Добавление поздравления",
+                Congratulation = new CongratulationModel()
+            },
+            r =>
+            {
+                if (r.Confirmed)
+                {
+                    using (var context = new CongratulationDbContext())
+                    {
+                        context.CongratulationsDbModel.Add(r.Congratulation);
+                        context.SaveChanges();
+                    }
+                }
+            });
             this.UpdateContext();
         }
 
-        private async void GoToCongratulationEdit()
+        private void GoToCongratulationEdit()
         {
-            //if (SelectedCongratulation == null)
-            //{
-            //    MessageBox.Show(
-            //        "Выберите поздравление для редактирования.",
-            //        "Ошибка редактирования");
-
-            //    return;
-            //}
-
-            //var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
-
-            //await displayRootRegistry.ShowModalPresentation(
-            //    new NewCongratulationViewModel(
-            //        this.SelectedCongratulation));
-
+            EditCongratulationRequest?.Raise(new CongratulationConfirmation
+            {
+                Title = "Редактирование поздравления",
+                Congratulation = new CongratulationModel(SelectedCongratulation)
+            },
+            r =>
+            {
+                if (r.Confirmed)
+                {
+                    using (var context = new CongratulationDbContext())
+                    {
+                        context.CongratulationsDbModel.Add(r.Congratulation);
+                        context.SaveChanges();
+                    }
+                }
+            });
             this.UpdateContext();
         }
 

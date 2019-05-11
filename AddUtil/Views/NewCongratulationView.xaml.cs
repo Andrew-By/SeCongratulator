@@ -18,7 +18,7 @@ namespace AddUtil.Views
     /// <summary>
     /// Interaction logic for NewCongratulationView.xaml
     /// </summary>
-    public partial class NewCongratulationView : Window
+    public partial class NewCongratulationView : UserControl
     {
         public NewCongratulationView()
         {

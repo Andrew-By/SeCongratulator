@@ -1,6 +1,8 @@
 ﻿using AddUtil.Db;
 using AddUtil.Models;
+using AddUtil.Notifications;
 using Prism.Commands;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ namespace AddUtil.ViewModels
     /// <summary>
     /// Инкапсулирует логику для вызова добавления новой модели в БД.
     /// </summary>
-    public class NewCongratulationViewModel : BindableBase
+    public class NewCongratulationViewModel : BindableBase, IInteractionRequestAware
     {
         //
         // Static consts.
@@ -96,15 +98,20 @@ namespace AddUtil.ViewModels
             get => abortCommand ?? (abortCommand = new DelegateCommand(AbortAppending));
         }
 
+        private CongratulationConfirmation _notification;
+        public INotification Notification
+        {
+            get { return _notification; }
+            set
+            {
+                _notification = (CongratulationConfirmation)value;
+                CopyCongratulation(_notification.Congratulation);
+            }
+        }
+        public Action FinishInteraction { get; set; }
+
         public NewCongratulationViewModel()
         {
-            this.CongratulationModel = new CongratulationModel();
-            InitSexChooser();
-        }
-
-        public NewCongratulationViewModel(CongratulationModel congratulationModel)
-        {
-            CopyCongratulation(congratulationModel);
             InitSexChooser();
         }
 
@@ -185,7 +192,8 @@ namespace AddUtil.ViewModels
             }
 
             dbContext.SaveChanges();
-            this.AbortAppending();
+            _notification.Confirmed = true;
+            FinishInteraction?.Invoke();
         }
 
         private int GetCongratulationModelSex()
@@ -212,8 +220,7 @@ namespace AddUtil.ViewModels
 
         private void AbortAppending()
         {
-            //var displayRoot = (Application.Current as App).DisplayRootRegistry;
-            //displayRoot.HidePresentation(this);
+            FinishInteraction?.Invoke();
         }
 
         private void ChooseContentTypeInModel(string contentType)

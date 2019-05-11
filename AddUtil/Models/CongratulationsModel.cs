@@ -13,6 +13,19 @@ namespace AddUtil.Models
     /// </summary>
     public class CongratulationModel : ModelBase, IDataErrorInfo
     {
+        public CongratulationModel() { }
+
+        public CongratulationModel(CongratulationModel model)
+        {
+            Id = model.Id;
+            Kind = model.Kind;
+            Content = model.Content;
+            Holiday = model.Holiday;
+            Interest = model.Interest;
+            Sex = model.Sex;
+            Age = model.Age;
+        }
+
         //
         // Поля для определения модели поздравляшки.
         //

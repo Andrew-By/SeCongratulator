@@ -135,6 +135,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Db\DbMergeService.cs" />
+    <Compile Include="Notifications\CongratulationConfirmation.cs" />
     <Compile Include="ViewModels\CongratulationsViewModel.cs" />
     <Compile Include="ViewModels\MergeViewModel.cs" />
     <Compile Include="ViewModels\NewCongratulationViewModel.cs" />

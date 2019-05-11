@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:local="clr-namespace:AddUtil.Views"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="789.977" d:DesignHeight="281.966">
     <Grid>
@@ -11,6 +13,23 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
+
+        <i:Interaction.Triggers>
+            <prism:InteractionRequestTrigger SourceObject="{Binding AppendInteractionRequest, Mode=OneWay}">
+                <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                    <prism:PopupWindowAction.WindowContent>
+                        <local:NewCongratulationView />
+                    </prism:PopupWindowAction.WindowContent>
+                </prism:PopupWindowAction>
+            </prism:InteractionRequestTrigger>
+            <prism:InteractionRequestTrigger SourceObject="{Binding EditCongratulationRequest, Mode=OneWay}">
+                <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                    <prism:PopupWindowAction.WindowContent>
+                        <local:NewCongratulationView />
+                    </prism:PopupWindowAction.WindowContent>
+                </prism:PopupWindowAction>
+            </prism:InteractionRequestTrigger>
+        </i:Interaction.Triggers>
 
         <DataGrid 
             Margin="10"
