@@ -4,6 +4,7 @@ using AddUtil.Notifications;
 using Prism.Commands;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,8 @@ namespace AddUtil.ViewModels
         //
         // Fields and properties.
         //
+
+        private readonly IRegionManager _regionManager;
 
         private List<CongratulationModel> congratulations;
         public List<CongratulationModel> Congratulations
@@ -91,8 +94,10 @@ namespace AddUtil.ViewModels
         // Constructors.
         //
 
-        public CongratulationsViewModel()
+        public CongratulationsViewModel(IRegionManager regionManager)
         {
+            _regionManager = regionManager;
+
             AppendInteractionRequest = new InteractionRequest<CongratulationConfirmation>();
             EditCongratulationRequest = new InteractionRequest<CongratulationConfirmation>();
             this.InitCongratulationsCollection();
@@ -174,11 +179,7 @@ namespace AddUtil.ViewModels
         // Перенос из одной базы в другую - старая база должна подаваться аргументом, на выходе новая база, заполненная значениями со старой.
         private async void GoToMergeWithOldDb()
         {
-            //var displayRootRegistry = (Application.Current as App).DisplayRootRegistry;
-
-            //await displayRootRegistry.ShowModalPresentation(new MergeViewModel());
-
-            //this.UpdateContext();
+            _regionManager.Regions["ContentRegion"].RequestNavigate(new Uri("MergeView", UriKind.RelativeOrAbsolute));
         }
     }
 }

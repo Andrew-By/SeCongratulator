@@ -17,7 +17,7 @@ namespace AddUtil.Views
     /// <summary>
     /// Interaction logic for MergeView.xaml
     /// </summary>
-    public partial class MergeView : Window
+    public partial class MergeView : UserControl
     {
         public MergeView()
         {

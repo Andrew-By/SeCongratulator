@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,13 @@ namespace AddUtil.ViewModels
     /// </summary>
     public class MergeViewModel : BindableBase
     {
+        private readonly IRegionManager _regionManager;
+
+        public MergeViewModel(IRegionManager regionManager)
+        {
+            _regionManager = regionManager;
+        }
+
         private ICommand abortCommand;
         public ICommand AbortCommand
         {
@@ -23,8 +31,9 @@ namespace AddUtil.ViewModels
 
         private void Abort()
         {
-            //var displayRoot = (Application.Current as App).DisplayRootRegistry;
-            //displayRoot.HidePresentation(this);
+            var navService = _regionManager.Regions["ContentRegion"].NavigationService;
+            if (navService.Journal.CanGoBack)
+                navService.Journal.GoBack();
         }
     }
 }
